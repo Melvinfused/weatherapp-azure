@@ -25,3 +25,4 @@ dist-ssr
 
 .vercel
 .env
+weatherapp-vm_key.pem
