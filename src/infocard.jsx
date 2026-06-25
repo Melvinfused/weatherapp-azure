@@ -14,28 +14,29 @@ const WeatherInfoCard = () => {
     visibility: "--"
   });
 
-  const API_KEY = import.meta.env.VITE_API_KEY;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     if (!location) return;
 
     const fetchWeather = async () => {
       try {
-        const response = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}&units=metric`
-        );
+        const url = `${API_URL}/api/weather?city=${encodeURIComponent(location)}`;
+        console.log(url);
+
+        const response = await fetch(url);
         const data = await response.json();
 
         if (response.ok) {
           setWeather({
-            temp: data.main.temp + "°C",
-            description: data.weather[0].description,
-            humidity: data.main.humidity + "%",
-            windSpeed: data.wind.speed + " m/s",
-            pressure: data.main.pressure + " hPa",
-            visibility: (data.visibility / 1000).toFixed(1) + " km",
-            aqi: "--",
-            noiseLevel: "-- dB",
+            temp: data.temp,
+            description: data.description,
+            humidity: data.humidity,
+            windSpeed: data.windSpeed,
+            pressure: data.pressure,
+            visibility: data.visibility,
+            aqi: data.aqi,
+            noiseLevel: data.noiseLevel,
           });
         } else {
           setWeather(prev => ({ ...prev, description: "Location not found" }));
@@ -51,22 +52,22 @@ const WeatherInfoCard = () => {
   return (
     <div className="weather-overlay">
       <div className="weather-card">
-       <div className="weather-header">
-  <div className="temp-climate">
-    <span className="temperature">{weather.temp}</span>
-    <span className="climate"> {weather.description}</span>
-  </div>
-  <div className="location-container">
-    <span className="location-dot">⬤</span>
-    <input
-      type="text"
-      value={location}
-      onChange={(e) => setLocation(e.target.value)}
-      placeholder="Enter city, country"
-      className="location-input"
-    />
-  </div>
-</div>
+        <div className="weather-header">
+          <div className="temp-climate">
+            <span className="temperature">{weather.temp}</span>
+            <span className="climate"> {weather.description}</span>
+          </div>
+          <div className="location-container">
+            <span className="location-dot">⬤</span>
+            <input
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Enter city, country"
+              className="location-input"
+            />
+          </div>
+        </div>
 
         <div className="weather-table">
           <div className="weather-row">
