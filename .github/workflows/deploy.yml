@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "**"
+      - "!api/**"
+      - ".github/workflows/deploy.yml"
 
 jobs:
   deploy:
@@ -23,7 +27,9 @@ jobs:
 
             git pull origin main
 
-            docker build -t weatherapp .
+            docker build \
+              --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+              -t weatherapp .
 
             docker stop weatherapp || true
             docker rm weatherapp || true
