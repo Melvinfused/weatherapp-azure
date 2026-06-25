@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "api/**"
-      - ".github/workflows/function-deploy.yml"
+      - ".github/workflows/deploy_api.yml"
 
 jobs:
   deploy:
