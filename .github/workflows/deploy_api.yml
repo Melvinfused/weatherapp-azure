@@ -23,7 +23,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          cdapi
+          cd api
           npm install
 
       - name: Deploy Azure Function
