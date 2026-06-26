@@ -21,7 +21,7 @@ const WeatherInfoCard = () => {
 
     const fetchWeather = async () => {
       try {
-        const url = `${API_URL}/api/weather?city=${encodeURIComponent(location)}`;
+        const url = `${API_URL}?city=${encodeURIComponent(location)}`;
         console.log(url);
 
         const response = await fetch(url);
